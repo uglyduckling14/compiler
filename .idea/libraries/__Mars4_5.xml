@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="._Mars4_5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/__MACOSX/p5-compiler/._Mars4_5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../p4-formatter/antlr-4.9.1-complete.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
