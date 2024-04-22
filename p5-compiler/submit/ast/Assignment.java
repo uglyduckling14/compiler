@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 /**
  *
  * @author edwajohn
@@ -29,6 +31,12 @@ public class Assignment implements Expression, Node {
       builder.append(type.toString());
 
     }
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+
+    return null;
   }
 
 }

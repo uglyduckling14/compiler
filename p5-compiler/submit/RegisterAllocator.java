@@ -18,6 +18,10 @@ public final class RegisterAllocator {
     // True if t is used
     private final boolean[] t = new boolean[10];
     private final boolean[] s = new boolean[8];
+
+    private final boolean[] a = new boolean[4];
+
+    private final boolean[] v = new boolean[2];
     private final Set<String> used = new HashSet<>();
 
     public RegisterAllocator() {
@@ -29,6 +33,30 @@ public final class RegisterAllocator {
             if (!t[i]) {
                 t[i] = true;
                 String str = "$t" + i;
+                used.add(str);
+                return str;
+            }
+        }
+        return null;
+    }
+
+    public String getV(){
+        for (int i = 0; i < v.length; ++i) {
+            if (!v[i]) {
+                v[i] = true;
+                String str = "$v" + i;
+                used.add(str);
+                return str;
+            }
+        }
+        return null;
+    }
+
+    public String getA(){
+        for (int i = 0; i < a.length; ++i) {
+            if (!a[i]) {
+                a[i] = true;
+                String str = "$a" + i;
                 used.add(str);
                 return str;
             }
@@ -122,5 +150,7 @@ public final class RegisterAllocator {
     public void clearAll() {
         Arrays.fill(t, false);
         Arrays.fill(s, false);
+        Arrays.fill(v, false);
+        Arrays.fill(a, false);
     }
 }

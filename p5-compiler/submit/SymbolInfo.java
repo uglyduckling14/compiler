@@ -27,5 +27,8 @@ public class SymbolInfo {
   public String toString() {
     return "<" + id + ", " + type + '>';
   }
+  public String getId(){
+    return id;
+  }
 
 }

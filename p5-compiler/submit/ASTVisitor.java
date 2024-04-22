@@ -6,8 +6,7 @@ import parser.CminusBaseVisitor;
 import parser.CminusParser;
 import submit.ast.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class ASTVisitor extends CminusBaseVisitor<Node> {
@@ -251,10 +250,11 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
     @Override public Node visitCall(CminusParser.CallContext ctx) {
         final String id = ctx.ID().getText();
         final List<Expression> args = new ArrayList<>();
+
         for (CminusParser.ExpressionContext e : ctx.expression()) {
             args.add((Expression) visitExpression(e));
         }
-        if (symbolTable.find(id) == null) {
+        if (symbolTable.find(id) == null ) {
             LOGGER.warning("Undefined symbol on line " + ctx.getStart().getLine() + ": " + id);
         }
         return new Call(id, args);
@@ -272,5 +272,8 @@ public class ASTVisitor extends CminusBaseVisitor<Node> {
             node = new BoolConstant(ctx.getText().equals("true"));
         }
         return node;
+    }
+    public SymbolTable getSymbolTable(){
+        return symbolTable;
     }
 }

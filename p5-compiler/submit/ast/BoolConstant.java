@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 /**
  *
  * @author edwajohn
@@ -22,6 +24,12 @@ public class BoolConstant implements Expression {
     } else {
       builder.append("false");
     }
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+
+    return null;
   }
 
 }

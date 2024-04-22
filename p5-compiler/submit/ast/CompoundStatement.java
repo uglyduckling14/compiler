@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 import java.util.List;
 
 /**
@@ -25,6 +27,14 @@ public class CompoundStatement implements Statement {
       s.toCminus(builder, prefix + "  ");
     }
     builder.append(prefix).append("}\n");
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    for (Statement statement:statements) {
+      statement.toMIPS(code,data,symbolTable,regAllocator);
+    }
+    return MIPSResult.createVoidResult();
   }
 
 }

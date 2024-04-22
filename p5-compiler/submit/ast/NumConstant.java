@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 /**
  *
  * @author edwajohn
@@ -18,6 +20,12 @@ public class NumConstant implements Expression, Node {
 
   public void toCminus(StringBuilder builder, final String prefix) {
     builder.append(Integer.toString(value));
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+
+    return null;
   }
 
 }

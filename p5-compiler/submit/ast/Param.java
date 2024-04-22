@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 /**
  *
  * @author edwajohn
@@ -38,6 +40,12 @@ public class Param implements Node {
     } else {
       builder.append(type).append(" ").append(id);
     }
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+
+    return null;
   }
 
 }

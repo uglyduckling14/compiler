@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 /**
  *
  * @author edwajohn
@@ -29,5 +31,11 @@ public class While implements Statement {
       statement.toCminus(builder, prefix + " ");
     }
 
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+
+    return null;
   }
 }

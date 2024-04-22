@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,17 @@ public class Program implements Node {
     for (Declaration declaration : declarations) {
       declaration.toCminus(builder, "");
     }
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    code.append("\n");
+    for (Declaration declaration : declarations) {
+      declaration.toMIPS(code, data, symbolTable, regAllocator);
+    }
+    code.append("# Exiting scope.\n").append("addi $sp $sp 0\n").append("li $v0 10\n" +
+            "syscall\n");
+    return MIPSResult.createVoidResult();
   }
 
 }

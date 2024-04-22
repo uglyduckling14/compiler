@@ -4,6 +4,8 @@
  */
 package submit.ast;
 
+import submit.*;
+
 /**
  *
  * @author edwajohn
@@ -22,6 +24,12 @@ public class UnaryOperator implements Expression {
   public void toCminus(StringBuilder builder, String prefix) {
     builder.append(type);
     expression.toCminus(builder, prefix);
+  }
+
+  @Override
+  public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+
+    return null;
   }
 
 }
