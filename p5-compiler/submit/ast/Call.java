@@ -39,15 +39,18 @@ public class Call implements Expression {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     //load args address
+    symbolTable.find("$sp").setOffset(0);
     code.append("# ").append(id).append("\n");
+    //TODO: Make sure li X is valid
     for (Expression arg:args) {
       MIPSResult a = arg.toMIPS(code, data, symbolTable, regAllocator);
       if(a.getRegister() != null) {
         code.append("move ").append(regAllocator.getA()).append(" ").append(a.getRegister()).append("\n");
-        code.append("li ").append(regAllocator.getV()).append(" 1\n");
+        code.append("li ").append(regAllocator.getV()).append(" ").append(getReturnType(a)).append("\n");
       }
       code.append("syscall\n");
       regAllocator.clearAll();
+
     }
     if(id.equals("println")){
       StringConstant con = new StringConstant("\"\\n\"");
@@ -57,5 +60,10 @@ public class Call implements Expression {
     }
     return MIPSResult.createVoidResult();
   }
-
+  private String getReturnType(MIPSResult a){
+    if(a.getType() == VarType.INT){
+      return "1";
+    }
+    return "4";
+  }
 }

@@ -35,8 +35,14 @@ public class Assignment implements Expression, Node {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-
-    return null;
+    MIPSResult a = mutable.toMIPS(code, data, symbolTable, regAllocator);
+    code.append("# Compute rhs for assignment ").append(type).append("\n");
+    MIPSResult r = rhs.toMIPS(code, data, symbolTable, regAllocator);
+    code.append("# complete assignment statement with store\n");
+    //regAllocator.saveT(code, symbolTable.find(a.getRegister()).getOffset());
+    code.append("sw").append(" ").append(r.getRegister()).append(" ").append(symbolTable.find(a.getRegister()).getOffset()).append("(").append(a.getRegister()).append(")\n");
+    regAllocator.clearAll();
+    return MIPSResult.createVoidResult();
   }
 
 }

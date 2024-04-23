@@ -17,12 +17,13 @@ public class SymbolInfo {
   private final VarType type;
   private final boolean function;
 
+  private int offset;
+
   public SymbolInfo(String id, VarType type, boolean function) {
     this.id = id;
     this.type = type;
     this.function = function;
   }
-
   @Override
   public String toString() {
     return "<" + id + ", " + type + '>';
@@ -30,5 +31,11 @@ public class SymbolInfo {
   public String getId(){
     return id;
   }
-
+  public int setOffset(int o){
+    offset=o;
+    return offset;
+  }
+  public int getOffset(){
+    return offset;
+  }
 }

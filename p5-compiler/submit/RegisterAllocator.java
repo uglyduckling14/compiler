@@ -103,6 +103,21 @@ public final class RegisterAllocator {
 //        return saveRestore(code, baseOffset, true, true);
 //    }
 
+    public int li(StringBuilder code, int baseOffset){
+        int offset = 0;
+        boolean[] r = t;
+        String prefix = "$t";
+        String str="";
+        for (int i = 0; i < r.length; ++i) {
+            if (r[i]) {
+                offset -= 4;
+                str = prefix + i;
+
+            }
+        }
+        code.append("li").append(" ").append(str).append(" ").append(offset-baseOffset).append("\n");
+        return -offset;
+    }
     public int saveT(StringBuilder code, int baseOffset) {
         return saveRestore(code, baseOffset, false, true);
     }

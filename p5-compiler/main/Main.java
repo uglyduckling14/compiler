@@ -31,7 +31,7 @@ public class Main {
         Level level = Level.INFO;
 
         // TODO Enable trace-level code as needed. When true, LOGGER.fine() statements will be visible.
-        final boolean trace = true;
+        final boolean trace = false;
         if (trace) {
             level = Level.ALL;
         }
@@ -49,9 +49,9 @@ public class Main {
         }
         final String filename = args[0];
 
-        LOGGER.info("");
-        LOGGER.info("Parsing " + filename + "\n");
-        LOGGER.info("");
+//        LOGGER.info("");
+//        LOGGER.info("Parsing " + filename + "\n");
+//        LOGGER.info("");
         final CharStream charStream = CharStreams.fromFileName(filename);
         CminusLexer lexer = new CminusLexer(charStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -59,9 +59,9 @@ public class Main {
         parser.setBuildParseTree(true);
         CminusParser.ProgramContext programCtx = parser.program();
 
-        LOGGER.info("");
-        LOGGER.info("Building abstract syntax tree");
-        LOGGER.info("");
+//        LOGGER.info("");
+//        LOGGER.info("Building abstract syntax tree");
+//        LOGGER.info("");
         ASTVisitor v = new ASTVisitor(LOGGER);
         Node ast = v.visitProgram(programCtx);
         SymbolTable symbolTable = v.getSymbolTable();
