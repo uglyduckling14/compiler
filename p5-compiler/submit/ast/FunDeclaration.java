@@ -48,11 +48,11 @@ public class FunDeclaration implements Declaration, Node {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     code.append("# code for ").append(id).append("\n");
+    code.append(id).append(":").append("\n");
     code.append("# Entering a new scope.").append("\n");
     code.append("# Symbols in symbol table:\n");
     for (SymbolInfo info : symbolTable.getAllSymbols()) {
       code.append("# ").append(info.getId()).append("\n");
-
     }
     code.append("# Update the stack pointer.\n");
     code.append("addi $sp $sp -0\n");

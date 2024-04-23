@@ -39,20 +39,23 @@ public class Call implements Expression {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     //load args address
+    code.append("# ").append(id).append("\n");
     for (Expression arg:args) {
-      code.append("la ");
-      arg.toMIPS(code, data, symbolTable, regAllocator);
+      MIPSResult a = arg.toMIPS(code, data, symbolTable, regAllocator);
+      if(a.getRegister() != null) {
+        code.append("move ").append(regAllocator.getA()).append(" ").append(a.getRegister()).append("\n");
+        code.append("li ").append(regAllocator.getV()).append(" 1\n");
+      }
       code.append("syscall\n");
       regAllocator.clearAll();
     }
     if(id.equals("println")){
-      code.append("la ");
-      StringConstant con = new StringConstant("\\n");
+      StringConstant con = new StringConstant("\"\\n\"");
       con.toMIPS(code, data, symbolTable, regAllocator);
       code.append("syscall\n");
       regAllocator.clearAll();
     }
-    return null;
+    return MIPSResult.createVoidResult();
   }
 
 }

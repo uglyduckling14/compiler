@@ -36,8 +36,20 @@ public class BinaryOperator implements Expression {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-
-    return null;
+    MIPSResult l = lhs.toMIPS(code, data, symbolTable, regAllocator);
+    MIPSResult r = rhs.toMIPS(code, data, symbolTable, regAllocator);
+    if(type == BinaryOperatorType.PLUS){
+      code.append("add ").append(l.getRegister()).append(" ").append(l.getRegister()).append(" ").append(r.getRegister()).append("\n");
+    } else if (type == BinaryOperatorType.DIVIDE) {
+      code.append("div ").append(l.getRegister()).append(" ").append(r.getRegister()).append("\n");
+      code.append("mflo ").append(l.getRegister()).append("\n");
+      regAllocator.clear(r.getRegister());
+    } else if (type == BinaryOperatorType.TIMES){
+      code.append("mult ").append(l.getRegister()).append(" ").append(r.getRegister()).append("\n");
+      code.append("mflo ").append(l.getRegister()).append("\n");
+      regAllocator.clear(r.getRegister());
+    }
+    return MIPSResult.createRegisterResult(l.getRegister(), VarType.INT);
   }
 
 }

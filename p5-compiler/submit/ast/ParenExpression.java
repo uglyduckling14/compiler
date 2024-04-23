@@ -28,7 +28,7 @@ public class ParenExpression implements Expression {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
 
-    return null;
+    return expression.toMIPS(code, data, symbolTable, regAllocator);
   }
 
 }
