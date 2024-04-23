@@ -16,6 +16,7 @@ public class SymbolInfo {
   // In the case of a function, type is the return type
   private final VarType type;
   private final boolean function;
+  private int offset=-1;
 
   public SymbolInfo(String id, VarType type, boolean function) {
     this.id = id;
@@ -30,5 +31,10 @@ public class SymbolInfo {
   public String getId(){
     return id;
   }
-
+  public void setOffset(int o){
+    offset = o;
+  }
+  public int getOffset(){
+    return offset;
+  }
 }

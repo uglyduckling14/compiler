@@ -26,6 +26,7 @@ public class SymbolTable {
     children = new ArrayList<>();
     uniqueLabelCounter = 0;
     addSymbol("println", new SymbolInfo("println", null, true));
+    addSymbol("$sp", new SymbolInfo("$sp", null, true));
   }
 
   public void addSymbol(String id, SymbolInfo symbol) {
