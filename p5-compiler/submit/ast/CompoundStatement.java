@@ -15,9 +15,11 @@ import java.util.List;
 public class CompoundStatement implements Statement {
 
   private final List<Statement> statements;
+  private SymbolTable symbolTable;
 
   public CompoundStatement(List<Statement> statements) {
     this.statements = statements;
+    symbolTable = new SymbolTable();
   }
 
   @Override
@@ -32,7 +34,7 @@ public class CompoundStatement implements Statement {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     for (Statement statement:statements) {
-      statement.toMIPS(code,data,symbolTable,regAllocator);
+      statement.toMIPS(code,data,this.symbolTable,regAllocator);
     }
     return MIPSResult.createVoidResult();
   }

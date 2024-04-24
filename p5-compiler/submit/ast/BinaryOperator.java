@@ -37,19 +37,21 @@ public class BinaryOperator implements Expression {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     MIPSResult l = lhs.toMIPS(code, data, symbolTable, regAllocator);
-    MIPSResult r = rhs.toMIPS(code, data, symbolTable, regAllocator);
-    if(type == BinaryOperatorType.PLUS){
-      code.append("add ").append(l.getRegister()).append(" ").append(l.getRegister()).append(" ").append(r.getRegister()).append("\n");
-    } else if (type == BinaryOperatorType.DIVIDE) {
-      code.append("div ").append(l.getRegister()).append(" ").append(r.getRegister()).append("\n");
-      code.append("mflo ").append(l.getRegister()).append("\n");
-      regAllocator.clear(r.getRegister());
-    } else if (type == BinaryOperatorType.TIMES){
-      code.append("mult ").append(l.getRegister()).append(" ").append(r.getRegister()).append("\n");
-      code.append("mflo ").append(l.getRegister()).append("\n");
-      regAllocator.clear(r.getRegister());
-    }
-    return MIPSResult.createRegisterResult(l.getRegister(), VarType.INT);
-  }
 
+    if(l.getRegister()==null){
+      code.append("# Load the value of ").append(l.getAddress()).append(".\n");
+      String t1 = regAllocator.getT();
+      code.append("lw ").append(t1).append(" ").append(symbolTable.getSize()/4).append("(").append(symbolTable.find("$sp").getId()).append(")\n");
+      MIPSResult r = rhs.toMIPS(code, data, symbolTable, regAllocator);
+      code.append("# Load the value of ").append(r.getAddress()).append(".\n");
+      String t2 = regAllocator.getT();
+      code.append("lw ").append(t2).append(" ").append(0).append("(").append(symbolTable.find("$sp").getId()).append(")\n");
+      regAllocator.ops(code, t1, t2, type);
+      return MIPSResult.createRegisterResult(t1, VarType.INT);
+    }else {
+      MIPSResult r = rhs.toMIPS(code, data, symbolTable, regAllocator);
+      regAllocator.ops(code, l.getRegister(), r.getRegister(), type);
+      return MIPSResult.createRegisterResult(l.getRegister(), VarType.INT);
+    }
+  }
 }

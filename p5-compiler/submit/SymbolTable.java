@@ -49,6 +49,14 @@ public class SymbolTable {
     return null;
   }
 
+  public int getSize(){
+    int size =0;
+    for (SymbolInfo info: table.values()) {
+      size+= info.getOffset();
+    }
+    return size/4;
+  }
+
   /**
    * Returns the new child.
    *

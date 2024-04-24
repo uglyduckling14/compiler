@@ -2,6 +2,8 @@
  */
 package submit;
 
+import submit.ast.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -75,7 +77,21 @@ public final class RegisterAllocator {
 //        }
 //        return null;
 //    }
-
+public void ops(StringBuilder code, String lhs, String rhs, BinaryOperatorType type){
+    if(type == BinaryOperatorType.PLUS){
+        code.append("add ").append(lhs).append(" ").append(lhs).append(" ").append(rhs).append("\n");
+    }
+    else if (type == BinaryOperatorType.DIVIDE) {
+        code.append("div ").append(lhs).append(" ").append(rhs).append("\n");
+        code.append("mflo ").append(lhs).append("\n");
+        clear(rhs);
+    }
+    else if (type == BinaryOperatorType.TIMES){
+        code.append("mult ").append(lhs).append(" ").append(rhs).append("\n");
+        code.append("mflo ").append(lhs).append("\n");
+        clear(rhs);
+    }
+}
     // Returns the number of bytes used to save the registers
     public int saveRestore(StringBuilder code, int baseOffset, boolean s_or_t, boolean save) {
         boolean[] r = s;

@@ -32,8 +32,24 @@ public class Mutable implements Expression, Node {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
+    code.append("# Get ").append(id).append("'s offset from $sp from the symbol table and initialize ").append(id).append("'s address with it. We'll add $sp later.").append("\n");
+    String t = regAllocator.getT();
+    if(symbolTable.find(id)==null) {
 
-    return null;
+      SymbolInfo info = new SymbolInfo(id, null, false);
+      info.setOffset(-4+symbolTable.getSize()*4);
+      symbolTable.addSymbol(id, info);
+      code.append("li ").append(t).append(" ").append(info.getOffset()).append("\n");
+
+    }
+    else{
+      code.append("li ").append(t).append(" ").append(symbolTable.find(id).getOffset()).append("\n");
+    }
+    code.append("# Add the stack pointer address to the offset.\n");
+    regAllocator.ops(code, t, "$sp", BinaryOperatorType.PLUS);
+    SymbolInfo info = new SymbolInfo(t, null, false);
+    symbolTable.addSymbol("$sp", info);
+    return MIPSResult.createAddressResult(id, VarType.INT);
   }
 
 }
