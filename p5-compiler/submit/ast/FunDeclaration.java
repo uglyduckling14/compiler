@@ -51,7 +51,7 @@ public class FunDeclaration implements Declaration, Node {
     code.append(id).append(":").append("\n");
     MIPSResult s = statement.toMIPS(code, data, symbolTable,regAllocator);
     if(!id.equals("main")){
-      code.append("jr $ra");
+      code.append("jr $ra\n");
     }
     return s;
   }

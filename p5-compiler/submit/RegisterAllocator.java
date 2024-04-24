@@ -101,7 +101,7 @@ public void ops(StringBuilder code, String lhs, String rhs, BinaryOperatorType t
         clear(rhs);
     }
     else if (type == BinaryOperatorType.MINUS){
-        code.append("sub ").append(lhs).append(" ").append(rhs).append(" ").append(lhs).append("\n");
+        code.append("sub ").append(lhs).append(" ").append(lhs).append(" ").append(rhs).append("\n");
     }
 }
     // Returns the number of bytes used to save the registers

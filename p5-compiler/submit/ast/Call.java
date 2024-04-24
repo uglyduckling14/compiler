@@ -68,7 +68,7 @@ public class Call implements Expression {
         code.append("addi $sp $sp ").append(symbolTable.find("$sp").getOffset()-4).append("\n");
         symbolTable.find("$sp").setOffset(-4);
       }else{
-        code.append("addi $sp $sp -").append(0).append("\n");
+        code.append("addi $sp $sp -").append(4).append("\n");
         SymbolInfo info = new SymbolInfo("", null, false);
         symbolTable.addSymbol("$sp", info);
       }
@@ -88,9 +88,9 @@ public class Call implements Expression {
       code.append("# Restore the stack pointer\n");
       regAllocator.ops(code, "$sp", String.valueOf(symbolTable.find("$sp").getOffset()*-1),BinaryOperatorType.PLUS);
       code.append("# Restore $t0-9 registers\n");
-      regAllocator.restoreT(code, symbolTable.find("$sp").getOffset());
+      regAllocator.restoreT(code, 0);
       code.append("# Restore $ra\n");
-      code.append("move $ra ").append(regAllocator.getT()).append("\n");
+      code.append("move $ra ").append("$t0").append("\n");
       regAllocator.clearAll();
     }
     return MIPSResult.createVoidResult();

@@ -29,7 +29,7 @@ public class UnaryOperator implements Expression {
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
     MIPSResult e = expression.toMIPS(code, data, symbolTable, regAllocator);
-    regAllocator.ops(code, e.getRegister(), "$zero", BinaryOperatorType.MINUS);
+    code.append("sub ").append(e.getRegister()).append(" ").append("$zero").append(" ").append(e.getRegister()).append("\n");
     return e;
   }
 
