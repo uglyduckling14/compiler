@@ -25,6 +25,7 @@ public final class RegisterAllocator {
 
     private final boolean[] v = new boolean[2];
     private final Set<String> used = new HashSet<>();
+    private boolean ra = false;
 
     public RegisterAllocator() {
         clearAll();
@@ -53,7 +54,15 @@ public final class RegisterAllocator {
         }
         return null;
     }
-
+    public String getRa(){
+        if(!ra){
+            ra = true;
+            String str = "$ra";
+            used.add(str);
+            return str;
+        }
+        return null;
+    }
     public String getA(){
         for (int i = 0; i < a.length; ++i) {
             if (!a[i]) {
@@ -90,6 +99,9 @@ public void ops(StringBuilder code, String lhs, String rhs, BinaryOperatorType t
         code.append("mult ").append(lhs).append(" ").append(rhs).append("\n");
         code.append("mflo ").append(lhs).append("\n");
         clear(rhs);
+    }
+    else if (type == BinaryOperatorType.MINUS){
+        code.append("sub ").append(lhs).append(" ").append(rhs).append(" ").append(lhs).append("\n");
     }
 }
     // Returns the number of bytes used to save the registers
@@ -168,5 +180,6 @@ public void ops(StringBuilder code, String lhs, String rhs, BinaryOperatorType t
         Arrays.fill(s, false);
         Arrays.fill(v, false);
         Arrays.fill(a, false);
+        ra = false;
     }
 }

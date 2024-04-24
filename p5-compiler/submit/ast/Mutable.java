@@ -37,7 +37,12 @@ public class Mutable implements Expression, Node {
     if(symbolTable.find(id)==null) {
 
       SymbolInfo info = new SymbolInfo(id, null, false);
-      info.setOffset(-4+symbolTable.getSize()*4);
+      SymbolInfo i = symbolTable.find("$sp");
+      int off=0;
+      if(i != null){
+        off = i.getOffset();
+      }
+      info.setOffset((-4+symbolTable.getSize()*4)-off);
       symbolTable.addSymbol(id, info);
       code.append("li ").append(t).append(" ").append(info.getOffset()).append("\n");
 

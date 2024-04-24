@@ -41,7 +41,7 @@ public class Program implements Node {
     for (Declaration declaration : declarations) {
       declaration.toMIPS(code, data, symbolTable, regAllocator);
     }
-    code.append("# Exiting scope.\n").append("addi $sp $sp 0\n").append("li $v0 10\n" +
+    code.append("li $v0 10\n" +
             "syscall\n");
     return MIPSResult.createVoidResult();
   }

@@ -28,8 +28,9 @@ public class UnaryOperator implements Expression {
 
   @Override
   public MIPSResult toMIPS(StringBuilder code, StringBuilder data, SymbolTable symbolTable, RegisterAllocator regAllocator) {
-
-    return null;
+    MIPSResult e = expression.toMIPS(code, data, symbolTable, regAllocator);
+    regAllocator.ops(code, e.getRegister(), "$zero", BinaryOperatorType.MINUS);
+    return e;
   }
 
 }

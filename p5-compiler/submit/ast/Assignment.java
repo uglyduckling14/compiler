@@ -39,7 +39,7 @@ public class Assignment implements Expression, Node {
     code.append("# Compute rhs for assignment =\n");
     MIPSResult r = rhs.toMIPS(code, data, symbolTable, regAllocator);
     code.append("# complete assignment statement with store\n");
-    code.append("sw ").append(r.getRegister()).append(" ").append(0).append("(").append(symbolTable.find("$sp").getId()).append(")\n");
+    code.append("sw ").append(r.getRegister()).append(" ").append(symbolTable.find("$sp").getOffset()).append("(").append(symbolTable.find("$sp").getId()).append(")\n");
     regAllocator.clearAll();
     return r;
   }
