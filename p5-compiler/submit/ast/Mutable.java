@@ -35,14 +35,15 @@ public class Mutable implements Expression, Node {
     code.append("# Get ").append(id).append("'s offset from $sp from the symbol table and initialize ").append(id).append("'s address with it. We'll add $sp later.").append("\n");
     int offset = symbolTable.find("$sp").getOffset();
     if(symbolTable.find(id).getOffset()==-1){
-      symbolTable.find(id).setOffset((offset-4)+1);
+      symbolTable.find(id).setOffset((offset)+1);
+      symbolTable.find("$sp").setOffset(offset-4);
     }
     String t = regAllocator.getT();
     code.append("li ").append(t).append(" ").append(symbolTable.find(id).getOffset()).append("\n");
     code.append("# Add the stack pointer address to the offset.\n");
     regAllocator.ops(code, t, "$sp", BinaryOperatorType.PLUS);
     symbolTable.addSymbol("$sp", new SymbolInfo(t, null, false));
-    symbolTable.find("$sp").setOffset(offset-4);
+
     return MIPSResult.createAddressResult(id, null);
   }
 

@@ -80,6 +80,9 @@ public final class RegisterAllocator {
             code.append("mflo ").append(lhs).append("\n");
             clear(rhs);
         }
+        else if (type == BinaryOperatorType.MINUS){
+            code.append("sub ").append(lhs).append(" ").append(rhs).append(" ").append(lhs).append("\n");
+        }
     }
 
 //    public String getS() {

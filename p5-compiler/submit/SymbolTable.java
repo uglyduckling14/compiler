@@ -69,9 +69,6 @@ public class SymbolTable {
     // Add symbols from this table
     List<SymbolInfo> allSymbols = new ArrayList<>(table.values());
     // Recursively add symbols from children
-    for (SymbolTable child : children) {
-      allSymbols.addAll(child.getAllSymbols());
-    }
     return allSymbols;
   }
   public String getUniqueLabel(){

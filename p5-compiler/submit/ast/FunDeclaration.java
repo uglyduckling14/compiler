@@ -55,7 +55,7 @@ public class FunDeclaration implements Declaration, Node {
       code.append("# ").append(info.getId()).append("\n");
     }
     code.append("# Update the stack pointer.\n");
-    code.append("addi $sp $sp -0\n");
+    code.append("addi $sp $sp -").append(symbolTable.find("$sp").getOffset()+1).append("\n");
 
     return statement.toMIPS(code, data, symbolTable,regAllocator);
   }

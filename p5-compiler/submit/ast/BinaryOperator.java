@@ -41,11 +41,11 @@ public class BinaryOperator implements Expression {
       code.append("# Load the value of ").append(l.getAddress()).append(".\n");
       //symbolTable.find(l.getAddress()).getId();
       String t1 = regAllocator.getT();
-      code.append("lw ").append(t1).append(" ").append(symbolTable.find(l.getAddress()).getOffset()+4).append("(").append(symbolTable.find("$sp").getId()).append(")\n");
+      code.append("lw ").append(t1).append(" ").append(symbolTable.find(l.getAddress()).getOffset()).append("(").append(symbolTable.find("$sp").getId()).append(")\n");
       MIPSResult r = rhs.toMIPS(code, data, symbolTable, regAllocator);
       code.append("# Load the value of ").append(r.getAddress()).append(".\n");
       String t2 = regAllocator.getT();
-      code.append("lw ").append(t2).append(" ").append(symbolTable.find(r.getAddress()).getOffset()+4+4).append("(").append(symbolTable.find("$sp").getId()).append(")\n");
+      code.append("lw ").append(t2).append(" ").append(symbolTable.find(r.getAddress()).getOffset()).append("(").append(symbolTable.find("$sp").getId()).append(")\n");
       regAllocator.ops(code, t1, t2, type);
       return MIPSResult.createRegisterResult(t1, VarType.INT);
     }else {
